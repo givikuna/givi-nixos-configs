@@ -66,6 +66,8 @@ in
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  services.gnome.gnome-browser-connector.enable = true;
+
   # Enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
@@ -87,6 +89,13 @@ in
    export GTK_THEME=Nordic
    export ICON_THEME=Nordic
   '';
+
+  services.xserver.desktopManager.gnome.extensions = [
+    {
+      name = "dash-to-dock";
+      uuid = "micxgx@gmail.com";
+    }
+  ];
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -143,6 +152,7 @@ in
   wget
   nordicTheme
   git
+  gnomeExtensions.dash-to-dock
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
