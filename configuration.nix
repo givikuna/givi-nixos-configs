@@ -6,6 +6,14 @@
 
 let
   nordicTheme = pkgs.nordic;
+  # Import the nixpkgs-unstable channel
+  unstable = import <nixpkgs> {
+    config = {
+      packageOverrides = pkgs_: with pkgs_; {
+        nixosUnstable = nixos;
+      };
+    };
+  };
 in
 {
   imports =
@@ -63,6 +71,11 @@ in
     xkbVariant = "";
   };
 
+              nixpkgs.config.permittedInsecurePackages = [
+                "electron-12.2.3"
+              ];
+
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -90,12 +103,12 @@ in
    export ICON_THEME=Nordic
   '';
 
-  services.xserver.desktopManager.gnome.extensions = [
-    {
-      name = "dash-to-dock";
-      uuid = "micxgx@gmail.com";
-    }
-  ];
+  # services.xserver.desktopManager.gnome.extensions = [
+  #  {
+  #    name = "dash-to-dock";
+  #    uuid = "micxgx@gmail.com";
+  #  }
+  # ];
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -131,6 +144,8 @@ in
 	gitkraken
 	ruby
 	go
+	etcher
+	electron
     ];
   };
 
@@ -153,6 +168,7 @@ in
   nordicTheme
   git
   gnomeExtensions.dash-to-dock
+  # balena-etcher-electron
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
